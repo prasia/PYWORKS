@@ -1,3 +1,4 @@
+
 //Filter JS
 // $(document).ready(function(){
 
@@ -12,6 +13,9 @@
 //         }
 //     })
 // })
+
+//import './firebase.js';
+
 $(document).ready(function(){
     $('.filter-item').click(function(){
         const value = $(this).attr('data-filter')
