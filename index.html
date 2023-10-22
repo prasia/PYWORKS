@@ -25,7 +25,7 @@
         <div class = "home-text container">
             <h2 class="home-title">PYWORKS Volunteering</h2>
             <span class = "home-subtitle">Because every kid should have the chance to code.</span>
-            <button id="updatePosts">Update Posts</button>
+            <br>
         </div>
     </section>
 
@@ -42,11 +42,10 @@
         <div class="post-box remote">
             <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
             <h2 class="category">Remote</h2>
-            <a href="post-page.html" class="post-title">
-                Abraham Lincoln Middle School Python Slide Curation
+            <a href="post-page.html" class="post-title"><h4 id = "titleDisplay">Abraham Lincoln Middle School Python Slide Curation</h4>
             </a>
-            <span class="post-date">12 October 2023</span>
-            <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
+            <span class="post-date" id="dateDisplay">12 October 2023</span>
+            <p class="post-description" id="descriptionDisplay">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
 
                 These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
                 
@@ -99,128 +98,72 @@
             <span class = "profile-name">Vam Vim</span>
         </div>
     </div>
-            <!--Post Box 1-->
-            <div class="post-box remote">
-                <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-                <h2 class="category">Remote</h2>
-                <a href="post-page.html" class="post-title">
-                    Abraham Lincoln Middle School Python Slide Curation
-                </a>
-                <span class="post-date">12 October 2023</span>
-                <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
+           <!-- <script src = "fb.js"></script> -->
+           <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+                apiKey: "AIzaSyAacuiuUfx9xPozqMnx2gjVhvlLrKDW8U8",
+                authDomain: "pyz-test.firebaseapp.com",
+                databaseURL: "https://pyz-test-default-rtdb.firebaseio.com",
+                projectId: "pyz-test",
+                storageBucket: "pyz-test.appspot.com",
+                messagingSenderId: "1002244320159",
+                appId: "1:1002244320159:web:e30ed55eb549fef3fc2baa",
+                measurementId: "G-RDP6P39C09"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+       
     
-                    These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                    
-                    Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!
-                    
-                    Go through all of these Indian sweets, we hope you love them as much as we do!</p>
-            <!--Profile 1-->
-            <div class="profile">
-                <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-                <span class = "profile-name">Vam Vim</span>
-            </div>
-        </div>
-            <!--Post Box 2-->
-            <div class="post-box virtual-live">
-                <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-                <h2 class="category">Virtual Live</h2>
-                <a href="post-page.html" class="post-title">
-                    Susan B. Anthony High Java Workshop
-                </a>
-                <span class="post-date">12 October 2023</span>
-                <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
+            import {getDatabase, ref, get, set, child, update, remove, onValue} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+            //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
+            // (the one where you imported "initializeApp" from),
+            //but change "firebase-app" to "firebase-database"
+            
     
-                    These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                    
-                    Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!</p>
-            <!--Profile 2-->
-            <div class="profile">
-                <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-                <span class = "profile-name">Vam Vim</span>
-            </div>
-        </div>
-            <!--Post Box 3-->
-            <div class="post-box in-person">
-                <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-                <h2 class="category">In-Person</h2>
-                <a href="post-page.html" class="post-title">
-                    Katherine Johnson Charter Javascript Bootcamp
-                </a>
-                <span class="post-date">12 October 2023</span>
-                <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
+            const db = getDatabase();
+            const dbPosts = ref(db, "posts")
+
+            var titleDisplay = document.querySelector('#titleDisplay')
+            var descriptionDisplay = document.querySelector('#descriptionDisplay')
+            var dateDisplay = document.querySelector('#dateDisplay')
+            var updateButton = document.querySelector('#updateButton')
+
+            // onValue(dbPosts, function(snapshot) {
+            //     const postsArray = snapshot.val();
+            //     for (let i = 0; i < postsArray.length;i++){
+            //         let currentPost = postsArray[i]
+            //         console.log(currentPost)
+            //         titleDisplay.innerHTML += currentPost.Title;
+            //         descriptionDisplay.innerHTML += currentPost.Description;
+            //     }
+            //     console.log(postsArray);
+            // });
+            onValue(dbPosts, function(snapshot) {
+                const postsObject = snapshot.val();
+                if (postsObject) {
+                    for (const postId in postsObject) {
+                        const currentPost = postsObject[postId];
+                        console.log(currentPost);
+                        titleDisplay.innerHTML = currentPost.Title;
+                        descriptionDisplay.innerHTML = currentPost.Description;
+                    }
+                } else {
+                    console.log('No posts available.');
+                }
+            });
+
     
-                    These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                    
-                    Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!
-                    
-                    Go through all of these Indian sweets, we hope you love them as much as we do!</p>
-            <!--Profile 3-->
-            <div class="profile">
-                <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-                <span class = "profile-name">Vam Vim</span>
-            </div>
-        </div>
-                    <!--Post Box 1-->
-                    <div class="post-box remote">
-                        <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-                        <h2 class="category">Remote</h2>
-                        <a href="post-page.html" class="post-title">
-                            Abraham Lincoln Middle School Python Slide Curation
-                        </a>
-                        <span class="post-date">12 October 2023</span>
-                        <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
-            
-                            These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                            
-                            Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!
-                            
-                            Go through all of these Indian sweets, we hope you love them as much as we do!</p>
-                    <!--Profile 1-->
-                    <div class="profile">
-                        <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-                        <span class = "profile-name">Vam Vim</span>
-                    </div>
-                </div>
-                    <!--Post Box 2-->
-                    <div class="post-box virtual-live">
-                        <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-                        <h2 class="category">Virtual Live</h2>
-                        <a href="post-page.html" class="post-title">
-                            Susan B. Anthony High Java Workshop
-                        </a>
-                        <span class="post-date">12 October 2023</span>
-                        <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
-            
-                            These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                            
-                            Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!</p>
-                    <!--Profile 2-->
-                    <div class="profile">
-                        <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-                        <span class = "profile-name">Vam Vim</span>
-                    </div>
-                </div>
-                    <!--Post Box 3-->
-                    <div class="post-box in-person">
-                        <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-                        <h2 class="category">In-Person</h2>
-                        <a href="post-page.html" class="post-title">
-                            Katherine Johnson Charter Javascript Bootcamp
-                        </a>
-                        <span class="post-date">12 October 2023</span>
-                        <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
-            
-                            These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                            
-                            Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!
-                            
-                            Go through all of these Indian sweets, we hope you love them as much as we do!</p>
-                    <!--Profile 3-->
-                    <div class="profile">
-                        <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-                        <span class = "profile-name">Vam Vim</span>
-                    </div>
-                </div>
+          </script>
     </section>
     <!--Footer-->
     <div class="footer container">
