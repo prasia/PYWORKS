@@ -27,14 +27,15 @@
             <!-- Back to Home -->
             <a href="index.html" class="back-home">Back Home</a>
             <!-- Title -->
-            <h1 class="header-title">Abraham Lincoln Middle School Python Slide Curation</h1>
+            <h1 class="header-title" id="header-title">Loading...</h1>
             <!-- Post Image -->
-            <img src="images/silverage.png" alt="Abraham Lincoln Middle School Python Slide Curation" class="header-img">
+            <img src="" alt = "Post Image" class="header-img">
         </div>
     </section>
 
+
     <!--Posts-->
-    <section class="post-content post-container">
+    <!-- <section class="post-content post-container">
         <h2 class="sub-heading">Project Description</h2>
         <p class = "post-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
         <p class = "post-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
@@ -42,6 +43,10 @@
         <p class = "post-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
         <p class = "post-text">Lorem ipsum dolor  sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
         <p class = "post-text">Lorem ipsum dolor  sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
+    </section> -->
+    <section class="post-content post-container" id="post-content">
+        <p class = "post-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
+        <!-- Dynamic content will be added here using JavaScript -->
     </section>
     <!-- Share -->
     <div class="share post-container">
@@ -65,11 +70,74 @@
             <a href="#"><i class = "bx bxl-tiktok"></i></a>
         </div>
     </div>
+    <script type = "module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
 
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+                apiKey: "AIzaSyAacuiuUfx9xPozqMnx2gjVhvlLrKDW8U8",
+                authDomain: "pyz-test.firebaseapp.com",
+                databaseURL: "https://pyz-test-default-rtdb.firebaseio.com",
+                projectId: "pyz-test",
+                storageBucket: "pyz-test.appspot.com",
+                messagingSenderId: "1002244320159",
+                appId: "1:1002244320159:web:e30ed55eb549fef3fc2baa",
+                measurementId: "G-RDP6P39C09"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+       
+    
+        import {getDatabase, ref, get, set, child, update, remove, onValue} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+            //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
+            // (the one where you imported "initializeApp" from),
+            //but change "firebase-app" to "firebase-database"
+        // Use the window.location or another method to extract the post ID from the URL
+        // Example:
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+        console.log(postId)
+
+        // const currentUrl = window.location.href;
+        // // const postId = currentUrl.get('id');
+        // console.log(currentUrl);
+        // console.log(postId);
+
+        // Reference to your Firebase database
+        const db = getDatabase();
+        const dbPosts = ref(db, "posts/" + postId); // Assuming your post data is structured under the "posts" node
+
+        // Select elements by their IDs
+        const postTitleElement = document.querySelector('#header-title');
+        const postDescriptionElement = document.querySelector('.post-text');
+        // const postDateElement = document.querySelector('#post-date');
+        const postImageElement = document.querySelector('.header-img');
+
+        // Fetch and display the post data
+        onValue(dbPosts, (snapshot) => {
+            const postData = snapshot.val();
+            if (postData) {
+                postTitleElement.innerHTML = postData.Title;
+                postDescriptionElement.textContent = postData.Description;
+                // postDescriptionElement.innerHTML = postData.Description;
+                // postDateElement.innerHTML = postData.Date;
+                postImageElement.src = postData.Img; // Set the image source
+            } else {
+                console.log('Post not found or error loading data.');
+            }
+        });
+    </script>
 
     <!--JQuery Link-->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
     <!--JS Link-->
-	<script src="main.js"></script>
+	<!-- <script src="main.js"></script> -->
   </body>
 </html>

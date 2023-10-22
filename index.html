@@ -28,76 +28,18 @@
             <br>
         </div>
     </section>
+        <!--Post filter-->
+        <div class = "post-filter container">
+            <span class = "filter-item active-filter" data-filter = 'all'>All</span>
+            <span class = "filter-item" data-filter = 'in-person'>In-Person</span>
+            <span class = "filter-item" data-filter = 'virtual-live'>Virtual Live</span>
+            <span class = "filter-item" data-filter = 'remote'>Remote</span>
+        </div>
 
     <!--Post filter-->
-    <div class = "post-filter container">
-        <span class = "filter-item active-filter" data-filter = 'all'>All</span>
-        <span class = "filter-item" data-filter = 'in-person'>In-Person</span>
-        <span class = "filter-item" data-filter = 'virtual-live'>Virtual Live</span>
-        <span class = "filter-item" data-filter = 'remote'>Remote</span>
-    </div>
-    <!--Posts-->
-    <section class="post container">
-        <!--Post Box 1-->
-        <div class="post-box remote">
-            <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-            <h2 class="category">Remote</h2>
-            <a href="post-page.html" class="post-title"><h4 id = "titleDisplay">Abraham Lincoln Middle School Python Slide Curation</h4>
-            </a>
-            <span class="post-date" id="dateDisplay">12 October 2023</span>
-            <p class="post-description" id="descriptionDisplay">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
-
-                These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                
-                Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!
-                
-                Go through all of these Indian sweets, we hope you love them as much as we do!</p>
-        <!--Profile 1-->
-        <div class="profile">
-            <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-            <span class = "profile-name">Vam Vim</span>
-        </div>
-    </div>
-        <!--Post Box 2-->
-        <div class="post-box virtual-live">
-            <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-            <h2 class="category">Virtual Live</h2>
-            <a href="post-page.html" class="post-title">
-                Susan B. Anthony High Java Workshop
-            </a>
-            <span class="post-date">12 October 2023</span>
-            <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
-
-                These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                
-                Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!</p>
-        <!--Profile 2-->
-        <div class="profile">
-            <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-            <span class = "profile-name">Vam Vim</span>
-        </div>
-    </div>
-        <!--Post Box 3-->
-        <div class="post-box in-person">
-            <img src="images/silverage.png" alt="testing logo thingy" class="post-img">
-            <h2 class="category">In-Person</h2>
-            <a href="post-page.html" class="post-title">
-                Katherine Johnson Charter Javascript Bootcamp
-            </a>
-            <span class="post-date">12 October 2023</span>
-            <p class="post-description">If you want to add some new flavors to your sweets rotation, youll love these delicious Indian Desserts!
-
-                These recipes are so different from the desserts most Westerners grew up on. They often use ingredients like pistachios and cardamom, adding exotic flavors.
-                
-                Youre sure to impress family and guests with these Indian desserts. Theyre all delicious and bursting with great flavors and textures. Plus, youll be surprised how easy they are!
-                
-                Go through all of these Indian sweets, we hope you love them as much as we do!</p>
-        <!--Profile 3-->
-        <div class="profile">
-            <img src="images/limitless.png" alt="just a profile image test" class="profile-img">
-            <span class = "profile-name">Vam Vim</span>
-        </div>
-    </div>
+    <section class="post container" id="posts-container">
+        <!-- Posts will be dynamically added here using JavaScript -->
+    </section>
            <!-- <script src = "fb.js"></script> -->
            <script type="module">
             // Import the functions you need from the SDKs you need
@@ -148,22 +90,83 @@
             //     }
             //     console.log(postsArray);
             // });
-            onValue(dbPosts, function(snapshot) {
+            // onValue(dbPosts, function(snapshot) {
+            //     const postsObject = snapshot.val();
+            //     if (postsObject) {
+            //         for (const postId in postsObject) {
+            //             const currentPost = postsObject[postId];
+            //             console.log(currentPost);
+            //             titleDisplay.innerHTML = currentPost.Title;
+            //             descriptionDisplay.innerHTML = currentPost.Description;
+            //         }
+            //     } else {
+            //         console.log('No posts available.');
+            //     }
+            // });
+            const postsContainer = document.getElementById('posts-container');
+
+            onValue(dbPosts, function (snapshot) {
                 const postsObject = snapshot.val();
                 if (postsObject) {
                     for (const postId in postsObject) {
                         const currentPost = postsObject[postId];
-                        console.log(currentPost);
-                        titleDisplay.innerHTML = currentPost.Title;
-                        descriptionDisplay.innerHTML = currentPost.Description;
+                        // Create a post box and append it to the container
+                        const postBox = createPostBox(currentPost);
+                        postsContainer.appendChild(postBox);
                     }
                 } else {
                     console.log('No posts available.');
                 }
             });
+            function chooseCategory(catNum){ //sort postings by category
+                if (catNum == 1){
+                    return "remote";
+                }
+                else if (catNum == 2){
+                    return "virtual-live";
+                }
+                else{
+                    return "in-person";
+                }
+            }
 
-    
-          </script>
+            function createPostBox(post) {
+                const postBox = document.createElement('div');
+                postBox.classList.add('post-box');
+                postBox.classList.add(chooseCategory(post.Category).toLowerCase());
+
+                const img = document.createElement('img');
+                img.classList.add('post-img');
+                img.src = post.Img;
+
+                const category = document.createElement('h2');
+                category.classList.add('category');
+                category.textContent = chooseCategory(post.Category); //Category choosing here
+
+                const title = document.createElement('a');
+                title.classList.add('post-title');
+                title.textContent = post.Title;
+                title.href = "post-page.html?id=" + post.Identifier;
+
+                const date = document.createElement('span');
+                date.classList.add('post-date');
+                date.textContent = post.Date;
+
+                const description = document.createElement('p');
+                description.classList.add('post-description');
+                description.textContent = post.Description;
+
+                //Actually adding all the elements to the postBox
+                postBox.appendChild(img);
+                postBox.appendChild(category);
+                postBox.appendChild(title);
+                postBox.appendChild(date);
+                postBox.appendChild(description);
+
+                return postBox;
+            }
+
+</script>
     </section>
     <!--Footer-->
     <div class="footer container">
@@ -187,6 +190,6 @@
     <!-- <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script> -->
 
-    <script src = "firebase.js"></script>
+    <!-- <script src = "firebase.js"></script> -->
   </body>
 </html>
