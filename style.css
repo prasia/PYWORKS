@@ -9,10 +9,14 @@
     box-sizing: border-box;
 }
 :root{
-    --container-color: #1a1e21;
-    --second-color: #fd8f44;
-    --text-color: #172317;
-    --bg-color: #fff;
+    /* --container-color: #2f30a8;
+    --second-color: #646fd4;
+    --text-color: #9ba3eb;
+    --bg-color: #ebf0ff; */
+    /* --container-color: #ebf0ff;
+    --second-color: #646fd4;
+    --text-color: #2f30a8;
+    --bg-color: #9ba3eb; */
 }
 ::selection{
     color: var(--bg-color);
