@@ -21,6 +21,7 @@
     --second-color: #2f30a8;
     --text-color: #9ba3eb;
     --bg-color: #ebf0ff; 
+    --hover-color: #1c1ca7;
 }
 ::selection{
     color: var(--bg-color);
@@ -69,6 +70,7 @@ header.shadow .logo{
     justify-content: space-between;
     padding: 18px 0;
 }
+
 .logo{
     font-size: 1.5rem;
     font-weight: 600;
@@ -87,7 +89,7 @@ header.shadow .logo{
 }
 
 .login:hover{
-    background: hsl(24, 98%, 58%);
+    background: var(--hover-color);
 }
 
 /*Home*/

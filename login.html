@@ -18,13 +18,12 @@
         <a href= "./login.html" class = "login">Login</a>
         </div>
     </header>
-
+    <div id="userActions">
     <button id="signInButton">Create Account/ Sign In</button>
-    <button id="signOutButton">Sign Out</button>
-    
-
-    <div id ="message">
-        <p>You have signed in as <span id="userName"></span> with the email <span id="userEmail"></span></p>
+        <button id="signOutButton">Sign Out</button>
+        <div id ="message">
+            <p>You have signed in as <span id="userName"></span> with the email <span id="userEmail"></span></p>
+        </div>
     </div>
 
     <script type="module">
@@ -85,7 +84,7 @@
                 signOutButton.style.display = "block";
                 message.style.display = "block";
                 userName.innerHTML = user.displayName;
-                userEmail.innerHTML = user.Email;
+                userEmail.innerHTML = user.email;
             } else{ //If user is not signed in
                 signOutButton.style.display = "none";
                 message.style.display = "none";

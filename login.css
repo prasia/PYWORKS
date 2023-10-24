@@ -24,6 +24,7 @@
     --second-color: #2f30a8;
     --text-color: #9ba3eb;
     --bg-color: #ebf0ff; 
+    --hover-color: #1c1ca7;
 }
 ::selection{
     color: var(--bg-color);
@@ -85,7 +86,7 @@ header.shadow .logo{
 }
 
 .login:hover{
-    background: hsl(24, 98%, 58%);
+    background: #1c1ca7;
 }
 .container{
     max-width: 1068px;
@@ -107,11 +108,13 @@ header.shadow .logo{
   #signInButton:hover, #signOutButton.hover {
     background-color: var(--second-color); /* Change color on hover */
 }
-  
 
-  
-#message {
-    /* Style your message div here if needed */
+#userActions {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    text-align: center;
+    float: none;
 }
   
   #userName,#userEmail {
