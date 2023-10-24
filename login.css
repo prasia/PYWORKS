@@ -1,0 +1,119 @@
+
+/* Login Styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+    box-sizing: border-box;
+}
+:root{
+    /* --container-color: #2f30a8;
+    --second-color: #646fd4;
+    --text-color: #9ba3eb;
+    --bg-color: #ebf0ff; */
+    /* --container-color: #ebf0ff;
+    --second-color: #646fd4;
+    --text-color: #2f30a8;
+    --bg-color: #9ba3eb; */
+    --container-color: #646fd4;
+    --second-color: #2f30a8;
+    --text-color: #9ba3eb;
+    --bg-color: #ebf0ff; 
+}
+::selection{
+    color: var(--bg-color);
+    background: var(--second-color);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--bg-color); 
+}
+a{
+    text-decoration: none;
+}
+
+/*Header Code*/
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+}
+
+header.shadow{
+    background: var(--bg-color);
+    box-shadow: 0 1px 4px hsl(0, 4%, 14% / 10);
+    transition: 0.4s;
+}
+
+header.shadow .logo{
+    color: var(--text-color)
+}
+
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+}
+.logo{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--second-color)
+}
+.logo span{
+    color: var(--second-color);
+}
+.login{
+    padding: 8px 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 4px;
+    background: var(--second-color);
+    color: var(--bg-color)
+}
+
+.login:hover{
+    background: hsl(24, 98%, 58%);
+}
+.container{
+    max-width: 1068px;
+    margin: auto;
+    width: 100%;
+}
+  
+#signInButton, #signOutButton {
+    padding: 10px 20px;
+    background-color: var(--container-color); /* Set your desired button color */
+    color: #fff; /* Set text color to white */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+  
+  #signInButton:hover, #signOutButton.hover {
+    background-color: var(--second-color); /* Change color on hover */
+}
+  
+
+  
+#message {
+    /* Style your message div here if needed */
+}
+  
+  #userName,#userEmail {
+    font-weight: bold;
+}

@@ -18,7 +18,7 @@
         <!--Logo-->
         <a href = "index.html" class = "logo">PY<span>WORKS.</span></a>
         <!--Login-->
-        <a href= "#" class = "login">Login</a>
+        <a href= "./login.html" class = "login">Login</a>
         </div>
 
     </header>
@@ -46,6 +46,12 @@
         <p class = "post-text">Lorem ipsum dolor  sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
     </section> -->
     <section class="post-content post-container" id="post-content">
+        <!-- <p class = "post-text"> Contact: </p>
+        <p class = "post-text"> Hours: </p>
+        <p class = "post-text"> City:</p> -->
+        <p class="post-contact">Contact: </p>
+        <p class="post-hours">Hours: </p>
+        <p class="post-location">City: </p>
         <p class = "post-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
         <!-- Dynamic content will be added here using JavaScript -->
     </section>
@@ -119,6 +125,9 @@
         const postDescriptionElement = document.querySelector('.post-text');
         // const postDateElement = document.querySelector('#post-date');
         const postImageElement = document.querySelector('.header-img');
+        const postContactElement = document.querySelector('.post-contact');
+        const postHoursElement = document.querySelector('.post-hours');
+        const postLocationElement = document.querySelector('.post-location');
 
         // Fetch and display the post data
         onValue(dbPosts, (snapshot) => {
@@ -127,8 +136,10 @@
                 postTitleElement.innerHTML = postData.Title;
                 postDescriptionElement.textContent = postData.Description;
                 // postDescriptionElement.innerHTML = postData.Description;
-                // postDateElement.innerHTML = postData.Date;
+                // // postDateElement.innerHTML = postData.Date;
+                // postContactElement.innerHTML = postData.Contact;
                 postImageElement.src = postData.Img; // Set the image source
+                postContactElement.innerHTML += postData.Contact;
             } else {
                 console.log('Post not found or error loading data.');
             }
