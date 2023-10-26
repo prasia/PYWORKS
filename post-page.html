@@ -12,11 +12,11 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel = "stylesheet">
   </head>
   <body>
-    <header>
+    <header class="shadow">
         <!--Nav-->
         <div class = "nav container">
         <!--Logo-->
-        <a href = "index.html" class = "logo">PY<span>WORKS.</span></a>
+        <a href = "index.html" class = "post-logo">PY<span class="post-span">WORKS.</span></a>
         <!--Login-->
         <a href= "./login.html" class = "login">Login</a>
         </div>
@@ -49,12 +49,19 @@
         <!-- <p class = "post-text"> Contact: </p>
         <p class = "post-text"> Hours: </p>
         <p class = "post-text"> City:</p> -->
-        <p class="post-contact">Contact: </p>
-        <p class="post-hours">Hours: </p>
-        <p class="post-location">City: </p>
+        <p class="add-info post-contact">Contact: </p>
+        <p class="add-info post-hours">Hours: </p>
+        <p class="add-info post-location">Location: </p>
+        <p class="add-info post-dates">Date(s): </p>
+        <p class="add-info post-spots">Spots: </p>
         <p class = "post-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, culpa debitis alias quibusdam non qui ratione ducimus corrupti molestias quae blanditiis corporis, praesentium sequi ab distinctio accusantium aspernatur laborum maxime.</p>
         <!-- Dynamic content will be added here using JavaScript -->
     </section>
+
+    <div class="apply-button-container">
+        <button id="applyButton">Apply</button>
+    </div>
+    
     <!-- Share -->
     <!-- <div class="share post-container">
         <span class="share-title">Share this article</span>
@@ -128,6 +135,8 @@
         const postContactElement = document.querySelector('.post-contact');
         const postHoursElement = document.querySelector('.post-hours');
         const postLocationElement = document.querySelector('.post-location');
+        const postDateElement = document.querySelector('.post-dates');
+        const postSpotsElement = document.querySelector('.post-spots');
 
         // Fetch and display the post data
         onValue(dbPosts, (snapshot) => {
@@ -140,6 +149,10 @@
                 // postContactElement.innerHTML = postData.Contact;
                 postImageElement.src = postData.Img; // Set the image source
                 postContactElement.innerHTML += postData.Contact;
+                postHoursElement.innerHTML += postData.Hours;
+                postLocationElement.innerHTML += postData.Location;
+                postDateElement.innerHTML += postData.Date;
+                postSpotsElement.innerHTML += postData.Spots;
             } else {
                 console.log('Post not found or error loading data.');
             }
