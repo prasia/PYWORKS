@@ -242,6 +242,9 @@ header.shadow .logo{
 }
 
 /*Post Content*/
+/* #profile{
+    width: fit-content;
+} */
 .post-header{
     width: 100%;
     height: 500px;
