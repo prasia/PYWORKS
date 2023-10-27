@@ -85,7 +85,7 @@
                 message.style.display = "block";
                 userName.innerHTML = user.displayName;
                 userEmail.innerHTML = user.email;
-                localStorage.setItem("userLoggedIn", "true");
+                // localStorage.setItem("userLoggedIn", "true");
                 
 
                 // var url = window.location.href;
@@ -96,7 +96,7 @@
             } else{ //If user is not signed in
                 signOutButton.style.display = "none";
                 message.style.display = "none";
-                localStorage.removeItem("userLoggedIn");
+                // localStorage.removeItem("userLoggedIn");
             }
         })
 
