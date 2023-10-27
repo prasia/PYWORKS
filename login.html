@@ -85,9 +85,18 @@
                 message.style.display = "block";
                 userName.innerHTML = user.displayName;
                 userEmail.innerHTML = user.email;
+                localStorage.setItem("userLoggedIn", "true");
+                
+
+                // var url = window.location.href;
+                // console.log(url)
+                // // url = "/login.html?loggedIn=true";
+                // window.location.replace(url);
+
             } else{ //If user is not signed in
                 signOutButton.style.display = "none";
                 message.style.display = "none";
+                localStorage.removeItem("userLoggedIn");
             }
         })
 

@@ -13,15 +13,33 @@
   </head>
   <body>
     <header class="shadow">
-        <!--Nav-->
-        <div class = "nav container">
-        <!--Logo-->
-        <a href = "index.html" class = "post-logo">PY<span class="post-span">WORKS.</span></a>
-        <!--Login-->
-        <a href= "./login.html" class = "login">Login</a>
+        <div class="nav container">
+            <a href="./index.html" class="logo">PY<span>WORKS.</span></a>
+            <!-- Add other header elements as needed -->
+            <a href="./login.html" class="login" id="login">Login</a>
+            <!-- <a href="./user-profile.html" id="profile"><i class='bx bxs-user-plus'></i></a> -->
         </div>
-
     </header>
+    <script>
+        // Use JavaScript to load and insert the shared header
+
+            function checkLogin(){
+
+            }
+        
+            var userLoggedIn = localStorage.getItem("userLoggedIn");
+
+            const loginButton = document.getElementById('login');
+            const profileLink = document.getElementById('profile');
+
+            if (userLoggedIn){
+                loginButton.innerHTML = "View Profile";
+                loginButton.href = './user-profile.html'
+            }
+            else{
+                //profile
+            }
+    </script>
     <!--Post Content-->
     <section class="post-header">
         <div class="header-content post-container">
@@ -59,7 +77,7 @@
     </section>
 
     <div class="apply-button-container">
-        <button id="applyButton">Apply</button>
+        <button id="applyButton">Apply Now!</button>
     </div>
     
     <!-- Share -->
@@ -109,6 +127,7 @@
        
     
         import {getDatabase, ref, get, set, child, update, remove, onValue} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+        import {onAuthStateChanged, getAuth} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
             //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
             // (the one where you imported "initializeApp" from),
             //but change "firebase-app" to "firebase-database"
@@ -117,6 +136,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const postId = urlParams.get('id');
         console.log(postId)
+        const auth = getAuth();
 
         // const currentUrl = window.location.href;
         // // const postId = currentUrl.get('id');
@@ -157,6 +177,19 @@
                 console.log('Post not found or error loading data.');
             }
         });
+        onAuthStateChanged(auth, (user) => {
+            if (user){ //Only if the user is signed in 
+                loginButton.innerHTML = "View Profile";
+
+                // var url = window.location.href;
+                // console.log(url)
+                // // url = "/login.html?loggedIn=true";
+                // window.location.replace(url);
+
+            } else{ //If user is not signed in
+
+            }
+        })
     </script>
 
     <!--JQuery Link-->
