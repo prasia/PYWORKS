@@ -10,6 +10,8 @@
     <link rel="icon" href="./images/heroimg.png">
     <!--Link to Boxicons-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel = "stylesheet">
+
+    
   </head>
   <body>
     <header class="shadow">
@@ -23,22 +25,22 @@
     <script>
         // Use JavaScript to load and insert the shared header
 
-            function checkLogin(){
+            // function checkLogin(){
 
-            }
+            // }
         
-            var userLoggedIn = localStorage.getItem("userLoggedIn");
+            // var userLoggedIn = localStorage.getItem("userLoggedIn");
 
-            const loginButton = document.getElementById('login');
-            const profileLink = document.getElementById('profile');
+            // const loginButton = document.getElementById('login');
+            // const profileLink = document.getElementById('profile');
 
-            if (userLoggedIn){
-                loginButton.innerHTML = "View Profile";
-                loginButton.href = './user-profile.html'
-            }
-            else{
-                //profile
-            }
+            // if (userLoggedIn){
+            //     loginButton.innerHTML = "View Profile";
+            //     loginButton.href = './user-profile.html'
+            // }
+            // else{
+            //     //profile
+            // }
     </script>
     <!--Post Content-->
     <section class="post-header">
@@ -158,6 +160,8 @@
         const postDateElement = document.querySelector('.post-dates');
         const postSpotsElement = document.querySelector('.post-spots');
 
+        const loginButton = document.querySelector('.login');
+
         // Fetch and display the post data
         onValue(dbPosts, (snapshot) => {
             const postData = snapshot.val();
@@ -180,7 +184,7 @@
         onAuthStateChanged(auth, (user) => {
             if (user){ //Only if the user is signed in 
                 loginButton.innerHTML = "View Profile";
-
+                loginButton.href = './user-profile.html'
                 // var url = window.location.href;
                 // console.log(url)
                 // // url = "/login.html?loggedIn=true";
@@ -191,6 +195,8 @@
             }
         })
     </script>
+
+    <!-- <script src="login.js"></script> -->
 
     <!--JQuery Link-->
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->

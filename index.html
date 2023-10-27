@@ -68,18 +68,21 @@
        
     
             import {getDatabase, ref, get, set, child, update, remove, onValue} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+            import {onAuthStateChanged, getAuth} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
             //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
             // (the one where you imported "initializeApp" from),
             //but change "firebase-app" to "firebase-database"
             
     
             const db = getDatabase();
+            const auth = getAuth();
             const dbPosts = ref(db, "posts")
 
             var titleDisplay = document.querySelector('#titleDisplay')
             var descriptionDisplay = document.querySelector('#descriptionDisplay')
             var dateDisplay = document.querySelector('#dateDisplay')
             var updateButton = document.querySelector('#updateButton')
+            var loginButton = document.querySelector('.login')
 
             // onValue(dbPosts, function(snapshot) {
             //     const postsArray = snapshot.val();
@@ -166,6 +169,20 @@
 
                 return postBox;
             }
+
+            onAuthStateChanged(auth, (user) => {
+            if (user){ //Only if the user is signed in 
+                loginButton.innerHTML = "View Profile";
+                loginButton.href = "user-profile.html"
+                // var url = window.location.href;
+                // console.log(url)
+                // // url = "/login.html?loggedIn=true";
+                // window.location.replace(url);
+
+            } else{ //If user is not signed in
+
+            }
+        })
 
 </script>
     </section>
