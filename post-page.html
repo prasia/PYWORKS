@@ -79,7 +79,7 @@
     </section>
 
     <div class="apply-button-container">
-        <button id="applyButton">Apply Now!</button>
+        <a id="applyButton" href="#" target="_blank">Apply Now!</a>
     </div>
     
     <!-- Share -->
@@ -159,8 +159,10 @@
         const postLocationElement = document.querySelector('.post-location');
         const postDateElement = document.querySelector('.post-dates');
         const postSpotsElement = document.querySelector('.post-spots');
+        const postApplyButton = document.querySelector('#applyButton');
 
         const loginButton = document.querySelector('.login');
+
 
         // Fetch and display the post data
         onValue(dbPosts, (snapshot) => {
@@ -177,6 +179,7 @@
                 postLocationElement.innerHTML += postData.Location;
                 postDateElement.innerHTML += postData.Date;
                 postSpotsElement.innerHTML += postData.Spots;
+                postApplyButton.href = postData.ApplyURL;
             } else {
                 console.log('Post not found or error loading data.');
             }
