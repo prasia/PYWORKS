@@ -175,13 +175,13 @@
             var categoryValue = getSelectedRadioOption();
             console.log(categoryValue);
 
-            set(ref(db, "Posts/" + idCode),{
+            set(ref(db, "posts/" + idCode),{
                 Identifier: idCode,
                 Title: enterTitle.value,
                 Description: enterDesc.value,
                 Hours: enterHours.value,
-                Email: enterContact.value,
-                ImgURL: enterImgURL.value,
+                Contact: enterContact.value,
+                Img: enterImgURL.value,
                 Date: enterDate.value,
                 Location: enterLocation.value,
                 Spots: enterSpots.value,
