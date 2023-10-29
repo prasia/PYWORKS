@@ -21,13 +21,14 @@
 
     <!-- Detail Collection -->
     <div id="enterDetails">
-        <h1>Enter Listing Details</h1>
+        <h1>Listing Details</h1>
+        <br>
 
         <h4>Title</h4> 
         <input id="enterTitle" type="text"> 
 
         <h4>Image (Google URL)</h4> 
-        <input id="enterImgURl" type="text"> 
+        <input id="enterImgURL" type="text"> 
 
         <h4>Description</h4> 
         <input id="enterDesc" type="text"> 
@@ -36,7 +37,10 @@
         <input id="enterContact" type="text"> 
 
         <h4>Date (Range)</h4> 
-        <input id="enterDates" type="text"> <br><br>
+        <input id="enterDate" type="text"> <br><br>
+
+        <h4>Application URL</h4> 
+        <input id="enterAppURL" type="text"> <br><br>
 
         <h4>Hours</h4> 
         <input id="enterHours" type="number"> <br><br>
@@ -54,10 +58,13 @@
         <label for="in-person">In-Person</label><br>
         <input type="radio" id="virtual-live" name="jobCategory" value="Virtual-Live">
         <label for="virtual-live">Virtual-Live</label>
-    </div>
 
         <br><br>
-        <button id="createPost">Create Post</button>
+        <div class="create-button-container">
+            <button id="createPost">Create Post</button>
+        </div>
+
+    </div>
 
         <!-- <button id="insert">INSERT</button>
         <button id="update">UPDATE</button>
@@ -97,22 +104,19 @@
 
         const db = getDatabase();
 
-        var enterTitle = document.querySelector("#enterTitle");
-        var enterDesc = document.querySelector("#enterDesc");
-        var enterHours = document.querySelector("#enterHours");
-        var enterContact = document.querySelector("#enterContact");
-        // var findID = document.querySelector("#findID");
-        // var find = document.querySelector("#findName");
-        // var findAge = document.querySelector("#findAge");
-        var findTitle = document.querySelector("#findName");
-        var findHours = document.querySelector("#findHours");
-        var findDesc = document.querySelector("#findDesc");
+        const enterTitle = document.querySelector("#enterTitle");
+        const enterDesc = document.querySelector("#enterDesc");
+        const enterHours = document.querySelector("#enterHours");
+        const enterContact = document.querySelector("#enterContact");
+        const enterAppURL = document.querySelector('#enterAppURL');
+        const enterDate = document.querySelector('#enterDate');
+        const enterLocation = document.querySelector('#enterLocation');
+        const enterImgURL = document.querySelector('#enterImgURL');
+        const enterSpots = document.querySelector('#enterSpots');
+        
       
 
-        var insertBtn = document.querySelector("#insert");
-        var updateBtn = document.querySelector("#update");
-        var removeBtn = document.querySelector("#remove");
-        var findBtn = document.querySelector("#find");
+        var createBtn = document.querySelector("#createPost");
 
         function GenerateID(){
             // generating id
@@ -125,8 +129,34 @@
             return id;
         }
 
-        var idCode = GenerateID()
-        console.log(idCode)
+        function getSelectedRadioOption() { // Converting type to number to mesh with system
+            var radioOptions = document.getElementsByName("jobCategory");
+            for (var i = 0; i < radioOptions.length; i++) {
+                if (radioOptions[i].checked) {
+                    var selectedValue = radioOptions[i].value;
+                    if (selectedValue === "Remote") {
+                        return 1;
+                    } else if (selectedValue === "Virtual-Live") {
+                        return 2;
+                    } else if (selectedValue === "In-Person") {
+                        return 3;
+                    }
+                }
+            }
+            //Just a catching case :))
+            return 0;
+        }
+        // var categoryValue = getSelectedRadioOption();
+        // console.log(categoryValue);
+
+
+
+
+
+
+
+        // var idCode = GenerateID()
+        // console.log(idCode)
 
         // var static idCode = 0
         // class ID{
@@ -139,12 +169,24 @@
         // console.log(idCode)
 
         function InsertData() {
-            set(ref(db, "posts/" + idCode),{
+            //Get some extra steps
+            var idCode = GenerateID()
+            console.log(idCode)
+            var categoryValue = getSelectedRadioOption();
+            console.log(categoryValue);
+
+            set(ref(db, "Posts/" + idCode),{
+                Identifier: idCode,
                 Title: enterTitle.value,
                 Description: enterDesc.value,
                 Hours: enterHours.value,
                 Email: enterContact.value,
-
+                ImgURL: enterImgURL.value,
+                Date: enterDate.value,
+                Location: enterLocation.value,
+                Spots: enterSpots.value,
+                ApplyURL: enterAppURL.value,
+                Category: categoryValue,
             })
             .then(()=>{
                 alert("Data added successfully");
@@ -153,6 +195,8 @@
                 alert(error);
             });
         }
+
+        createBtn.addEventListener('click', InsertData);
     </script>
 
     <!-- <div id="findDetails">

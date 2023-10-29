@@ -138,4 +138,22 @@ body{
     border-radius: 4px; /* Round the corners of the text fields */
 }
 
+#createPost {
+    padding: 10px 20px;
+    background-color: var(--second-color); /* Set to your --second-color */
+    color: #fff; /* Set text color to contrast with the background color */
+    border: none;
+    border-radius: 10px; /* Adjust the border radius as needed */
+    cursor: pointer;
+    font-size: 24px; /* Adjust the font size as needed */
+    transition: background-color 0.3s;
+}
+.create-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Adjust the height as needed for centering */
+    background-color: white; /* Set your desired background color */
+}
+
 
