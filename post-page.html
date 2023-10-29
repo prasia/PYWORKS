@@ -16,7 +16,7 @@
   <body>
     <header class="shadow">
         <div class="nav container">
-            <a href="./index.html" class="logo">PY<span>WORKS.</span></a>
+            <a href="./main-page.html" class="logo">PY<span>WORKS.</span></a>
             <!-- Add other header elements as needed -->
             <a href="./login.html" class="login" id="login">Login</a>
             <!-- <a href="./user-profile.html" id="profile"><i class='bx bxs-user-plus'></i></a> -->
@@ -46,7 +46,7 @@
     <section class="post-header">
         <div class="header-content post-container">
             <!-- Back to Home -->
-            <a href="index.html" class="back-home">Back Home</a>
+            <a href="./main-page.html" class="back-home">Back Home</a>
             <!-- Title -->
             <h1 class="header-title" id="header-title">Loading...</h1>
             <!-- Post Image -->
@@ -194,6 +194,11 @@
                 // window.location.replace(url);
 
             } else{ //If user is not signed in
+                postApplyButton.onclick = function() {
+                    alert("You must be signed in to apply for this job!");
+                    postApplyButton.href = "#"
+                    postApplyButton.target = "_self"
+                };
 
             }
         })

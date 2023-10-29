@@ -289,7 +289,7 @@
             // console.log(idCode)
     
             function InsertData() {
-                set(ref(db, "People/" + idCode),{
+                set(ref(db, "posts/" + idCode),{
                     Title: enterTitle.value,
                     Description: enterDesc.value,
                     Hours: enterHours.value,
@@ -306,11 +306,11 @@
             function FindData() {
                 const dbref = ref(db);
     
-                get(child(dbref, "People/" + findID.value))
+                get(child(dbref, "posts/" + findID.value))
                 .then((snapshot)=>{
                     if(snapshot.exists()){
                         findTitle.innerHTML = "Title: " + snapshot.val().Name;
-                        findHours.innerHTML = "Age: " + snapshot.val().Age;
+                        findHours.innerHTML = "Hours: " + snapshot.val().Age;
                     } else {
                         alert("No data found");
                     }
@@ -322,7 +322,7 @@
             }
     
             // function UpdateData(){
-            //     update(ref(db, "People/"+ enterID.value),{
+            //     update(ref(db, "posts/"+ enterID.value),{
             //         Name: enterName.value,
             //         Age: enterAge.value
             //     })
@@ -335,7 +335,7 @@
             // }
     
             // function RemoveData(){
-            //     remove(ref(db, "People/"+ enterID.value))
+            //     remove(ref(db, "posts/"+ enterID.value))
             //     .then(()=>{
             //         alert("Data deleted successfully");
             //     })

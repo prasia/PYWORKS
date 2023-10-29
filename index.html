@@ -1,51 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PYWORKS Testing</title>
-    <!--Link to CSS-->
-    <link rel="stylesheet" href="./css/style.css">
+    <title>Welcome to PYWORKS!</title>
     <link rel="icon" href="./images/heroimg.png">
-    <!--Link to Boxicons-->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel = "stylesheet">
-  </head>
-  <body>
+    <link rel="stylesheet" href="./css/preview.css">
+</head>
+<body>
     <header>
         <!--Nav-->
         <div class = "nav container">
         <!--Logo-->
-        <a href = "#" class = "logo">PY<span>WORKS.</span></a>
+        <a href = "./main-page.html" class = "logo">PY<span>WORKS.</span></a>
         <!--Login-->
         <a href= "./login.html" class = "login">Login</a>
         </div>
     </header>
-    <!--Home-->
-    <section class = "home" id="home">
-        <div class = "home-text container">
-            <h2 class="home-title">PYWORKS Volunteering</h2>
-            <span class = "home-subtitle">Because every kid should have the chance to code.</span>
-            <br>
-        </div>
-    </section>
-        <!--Post filter-->
-        <div class = "post-filter container">
-            <span class = "filter-item active-filter" data-filter = 'all'>All</span>
-            <span class = "filter-item" data-filter = 'in-person'>In-Person</span>
-            <span class = "filter-item" data-filter = 'virtual-live'>Virtual Live</span>
-            <span class = "filter-item" data-filter = 'remote'>Remote</span>
-        </div>
+    <div class="display-body">
+        <img src="./images/pylogo-2.png" alt="Welcome to PYWORKS!">
+    </div>
 
-    <!--Post filter-->
-    <section class="post container" id="posts-container">
-        <!-- Posts will be dynamically added here using JavaScript -->
-    </section>
-           <!-- <script src = "fb.js"></script> -->
-           <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
+    <script type = "module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
             // TODO: Add SDKs for Firebase products that you want to use
             // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -67,113 +47,33 @@
             const analytics = getAnalytics(app);
        
     
-            import {getDatabase, ref, get, set, child, update, remove, onValue} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
-            import {onAuthStateChanged, getAuth} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        import {onAuthStateChanged, getAuth} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
             //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
             // (the one where you imported "initializeApp" from),
             //but change "firebase-app" to "firebase-database"
-            
-    
-            const db = getDatabase();
-            const auth = getAuth();
-            const dbPosts = ref(db, "posts")
 
-            var titleDisplay = document.querySelector('#titleDisplay')
-            var descriptionDisplay = document.querySelector('#descriptionDisplay')
-            var dateDisplay = document.querySelector('#dateDisplay')
-            var updateButton = document.querySelector('#updateButton')
-            var loginButton = document.querySelector('.login')
+        // Use the window.location or another method to extract the post ID from the URL
 
-            // onValue(dbPosts, function(snapshot) {
-            //     const postsArray = snapshot.val();
-            //     for (let i = 0; i < postsArray.length;i++){
-            //         let currentPost = postsArray[i]
-            //         console.log(currentPost)
-            //         titleDisplay.innerHTML += currentPost.Title;
-            //         descriptionDisplay.innerHTML += currentPost.Description;
-            //     }
-            //     console.log(postsArray);
-            // });
-            // onValue(dbPosts, function(snapshot) {
-            //     const postsObject = snapshot.val();
-            //     if (postsObject) {
-            //         for (const postId in postsObject) {
-            //             const currentPost = postsObject[postId];
-            //             console.log(currentPost);
-            //             titleDisplay.innerHTML = currentPost.Title;
-            //             descriptionDisplay.innerHTML = currentPost.Description;
-            //         }
-            //     } else {
-            //         console.log('No posts available.');
-            //     }
-            // });
-            const postsContainer = document.getElementById('posts-container');
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const postId = urlParams.get('id');
+        // console.log(postId)
+        // const auth = getAuth();
 
-            onValue(dbPosts, function (snapshot) {
-                const postsObject = snapshot.val();
-                if (postsObject) {
-                    for (const postId in postsObject) {
-                        const currentPost = postsObject[postId];
-                        // Create a post box and append it to the container
-                        const postBox = createPostBox(currentPost);
-                        postsContainer.appendChild(postBox);
-                    }
-                } else {
-                    console.log('No posts available.');
-                }
-            });
-            function chooseCategory(catNum){ //sort postings by category
-                if (catNum == 1){
-                    return "remote";
-                }
-                else if (catNum == 2){
-                    return "virtual-live";
-                }
-                else{
-                    return "in-person";
-                }
-            }
+        // const currentUrl = window.location.href;
+        // // const postId = currentUrl.get('id');
+        // console.log(currentUrl);
+        // console.log(postId);
 
-            function createPostBox(post) {
-                const postBox = document.createElement('div');
-                postBox.classList.add('post-box');
-                postBox.classList.add(chooseCategory(post.Category).toLowerCase());
+        // Reference to your Firebase database
 
-                const img = document.createElement('img');
-                img.classList.add('post-img');
-                img.src = post.Img;
+        const loginButton = document.querySelector('.login');
+        const auth = getAuth();
 
-                const category = document.createElement('h2');
-                category.classList.add('category');
-                category.textContent = chooseCategory(post.Category); //Category choosing here
 
-                const title = document.createElement('a');
-                title.classList.add('post-title');
-                title.textContent = post.Title;
-                title.href = "post-page.html?id=" + post.Identifier;
-
-                const date = document.createElement('span');
-                date.classList.add('post-date');
-                date.textContent = post.Date;
-
-                const description = document.createElement('p');
-                description.classList.add('post-description');
-                description.textContent = post.Description;
-
-                //Actually adding all the elements to the postBox
-                postBox.appendChild(img);
-                postBox.appendChild(category);
-                postBox.appendChild(title);
-                postBox.appendChild(date);
-                postBox.appendChild(description);
-
-                return postBox;
-            }
-
-            onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, (user) => {
             if (user){ //Only if the user is signed in 
                 loginButton.innerHTML = "View Profile";
-                loginButton.href = "user-profile.html"
+                loginButton.href = './user-profile.html'
                 // var url = window.location.href;
                 // console.log(url)
                 // // url = "/login.html?loggedIn=true";
@@ -183,31 +83,8 @@
 
             }
         })
+    </script>
 
-</script>
-    </section>
-    <!--Footer-->
-    <div class="footer container">
-        <p>PYWORKS</p>
-        <div class = "social">
-            <!-- <a href="#"><i class = "bx bxl-instagram"></a> -->
-            <a href="#"><i class = "bx bxl-instagram"> </i></a>
-            <a href="#"><i class = "bx bxl-facebook"></i></a>
-            <a href="#"><i class = "bx bxl-twitter"></i></a>
-            <a href="#"><i class = "bx bxl-tiktok"></i></a>
-        </div>
-    </div>
-
-
-    <!--JQuery Link-->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <!--JS Link-->
-	<script src="main.js"></script>
-    <!-- <script src="firebase.js"></script> -->
-    <!-- Firebase Link -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script> -->
-
-    <!-- <script src = "firebase.js"></script> -->
-  </body>
+    
+</body>
 </html>

@@ -117,35 +117,25 @@ body{
     background-color: var(--container-color);
 }
 
-/*Profile Specific*/
-
-.pfp-image {
-    margin: 0;
-    border-radius: 50%;
-    width: 150px; /* Adjust the width and height to your preference */
-    height: 150px;
-    overflow: hidden; /* Hide any content outside the circular frame */
-}
-
-.display-name {
-    margin: 10px 0; /* Add some margin for spacing between elements */
-    text-align: center;
-}
-
-.display-email {
-    margin: 0;
-    text-align: center;
-}
-
-.profile-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    width: 50%;
+/*Form Specific*/
+/* Style the form container */
+#enterDetails {
+    background-color: white; /* Set the background color to white */
+    border-radius: 10px; /* Round the corners */
+    padding: 20px; /* Add some padding */
+    max-width: 400px; /* Set a maximum width */
+    margin: 0 auto; /* Center the form container horizontally */
+    text-align: center; /* Center the text fields */
     margin-top: 10%;
-    padding: 10px;
-    background-color: white;
-    border-radius: 10px;
 }
+
+/* Style the text fields */
+#enterDetails input[type="text"], #enterDetails input[type="number"] {
+    width: 100%; /* Make text fields occupy the full width of the container */
+    padding: 10px; /* Add padding to the text fields */
+    margin: 10px 0; /* Add margin to space them out */
+    border: 1px solid var(--text-color); /* Add a border to the text fields */
+    border-radius: 4px; /* Round the corners of the text fields */
+}
+
+
