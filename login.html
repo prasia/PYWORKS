@@ -78,6 +78,7 @@
                     displayName: user.displayName,
                     email: user.email,
                     img: user.photoURL,
+                    id: user.uid,
                     approvedHrs: 0,
                     pendingHrs: 0,
                     numApps: 0,
@@ -112,7 +113,7 @@
                 // window.location.replace(url);
 
                 loginButton.innerHTML = "View Profile";
-                loginButton.href = "./user-profile.html";
+                loginButton.href = './user-profile.html?id=' + user.uid;
 
             } else{ //If user is not signed in
                 signOutButton.style.display = "none";

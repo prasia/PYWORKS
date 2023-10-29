@@ -28,8 +28,8 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+        import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
         // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
@@ -52,16 +52,61 @@
         const auth = getAuth();
         const provider = new GoogleAuthProvider();
 
+
+
         const pfpImg = document.querySelector('.pfp-image');
         const displayName = document.querySelector('.display-name');
         const emailShow = document.querySelector('.display-email');
         const loginButton = document.querySelector('.login');
 
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const userId = urlParams.get('id'); // Get the "id" parameter from the URL
+        // console.log(userId);
+
         onAuthStateChanged(auth, (user) => {
             if (user){ //Only if the user is signed in 
-                displayName.innerHTML = user.displayName;
-                pfpImg.src = user.photoURL;
-                emailShow.innerHTML = user.email;
+                const urlParams = new URLSearchParams(window.location.search);
+                const userId = urlParams.get('id');
+                console.log(userId);
+
+                const db = getDatabase();
+                const dbUsers = ref(db, "users/" + userId);
+
+                const dbref = ref(db);
+
+
+                if (userId){
+                        get(child(dbref, "users/" + userId))
+                        .then((snapshot)=>{
+                        if(snapshot.exists()){
+                            displayName.innerHTML = snapshot.val().displayName;
+                            pfpImg.src = snapshot.val().photoURL;
+                            emailShow.innerHTML = snapshot.val().email;
+                        } else {
+                            alert("No data found");
+                        }
+                    })
+                    .catch((error)=>{
+                        alert(error)
+                    })
+                
+                    
+                    // onValue(dbUsers, (snapshot) => {
+                    //     const userData = snapshot.val();
+                    //     if (userData) {
+                    //         displayName.innerHTML = user.displayName;
+                    //         pfpImg.src = user.photoURL;
+                    //         emailShow.innerHTML = user.email;
+                    //     } else {
+                    //         console.log('Post not found or error loading data.');
+                    
+
+
+                    // displayName.innerHTML = user.displayName;
+                    // pfpImg.src = user.photoURL;
+                    // emailShow.innerHTML = user.email;
+                }
+
                 loginButton.innerHTML = 'Logout';
                 loginButton.href = './login.html';
                 // userEmail.innerHTML = user.email;

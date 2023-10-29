@@ -147,7 +147,7 @@
 
         // Reference to your Firebase database
         const db = getDatabase();
-        const dbPosts = ref(db, "posts/" + postId); // Assuming your post data is structured under the "posts" node
+        const dbPosts = ref(db, "posts/" + postId); // Post data is structured under "posts"
 
         // Select elements by their IDs
         const postTitleElement = document.querySelector('#header-title');
