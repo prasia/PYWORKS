@@ -73,7 +73,7 @@
         onAuthStateChanged(auth, (user) => {
             if (user){ //Only if the user is signed in 
                 loginButton.innerHTML = "View Profile";
-                loginButton.href = './user-profile.html'
+                loginButton.href = './user-profile.html?id='+ user.uid;
                 // var url = window.location.href;
                 // console.log(url)
                 // // url = "/login.html?loggedIn=true";
