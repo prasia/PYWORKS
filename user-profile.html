@@ -55,12 +55,15 @@
         const pfpImg = document.querySelector('.pfp-image');
         const displayName = document.querySelector('.display-name');
         const emailShow = document.querySelector('.display-email');
+        const loginButton = document.querySelector('.login');
 
         onAuthStateChanged(auth, (user) => {
             if (user){ //Only if the user is signed in 
                 displayName.innerHTML = user.displayName;
                 pfpImg.src = user.photoURL;
                 emailShow.innerHTML = user.email;
+                loginButton.innerHTML = 'Logout';
+                loginButton.href = './login.html';
                 // userEmail.innerHTML = user.email;
                 
 
