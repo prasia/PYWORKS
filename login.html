@@ -20,16 +20,22 @@
     </header>
     <div id="userActions">
     <button id="signInButton">Create Account/ Sign In</button>
+    <div id ="message">
+        <p>You have signed in as <span id="userName"></span> with the email <span id="userEmail"></span></p>
+    </div>
     <button id="signOutButton">Sign Out</button>
-        <div id ="message">
-            <p>You have signed in as <span id="userName"></span> with the email <span id="userEmail"></span></p>
-        </div>
+
+    <br><br>
+        <h4 id = "skillsHeader" style="display: none;">Your Skills</h4>
+        <input id="enterSkills" type="text" style="display: none;">
+        <button id="saveSkills" style="display: none;">Save Skills</button>
+
     </div>
 
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+        import { getDatabase, ref, set, update } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
         // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
@@ -59,10 +65,16 @@
         const message = document.getElementById("message");
         const userName = document.getElementById("userName");
         const userEmail = document.getElementById("userEmail");
+        const enterSkills = document.querySelector("#enterSkills");
+        const saveSkillsButton = document.querySelector('#saveSkills');
+        const skillsHeader = document.querySelector('#skillsHeader');
         const loginButton = document.querySelector('.login');
+        
 
         signOutButton.style.display = "none";
         message.style.display = "none";
+
+        const db = getDatabase();
 
         const userSignIn = async() => {
             signInWithPopup(auth, provider)
@@ -71,7 +83,7 @@
                 console.log(user); //Just for testing purposes
                 console.log(user.uid);
 
-                const db = getDatabase();
+                // Show a field, get those values submitted too?
                 const userRef = ref(db, "users/" + user.uid); // Assuming you want to use the user's UID as a key
 
                 set(userRef, {
@@ -82,7 +94,9 @@
                     approvedHrs: 0,
                     pendingHrs: 0,
                     numApps: 0,
-                    skills: [], //Ask here???
+                    category: 0,
+                    skills: "",
+                    // skills: "", // Field
             })
             }).catch((error) => {
                 const errorCode = error.code;
@@ -104,6 +118,24 @@
                 message.style.display = "block";
                 userName.innerHTML = user.displayName;
                 userEmail.innerHTML = user.email;
+                enterSkills.style.display = "block";
+                saveSkillsButton.style.display = "block";
+                skillsHeader.style.display = "block";
+
+                saveSkillsButton.addEventListener("click", () => {
+                    const user = auth.currentUser;
+                    if (user) {
+                        const uid = user.uid;
+
+                        // Save the "Skills" value under the user's node
+                        update(ref(db, "users/" + uid), {
+                            skills: enterSkills.value,
+                        });
+                        alert("Skills saved successfully!");
+
+                        enterSkills.value = "";
+                    }
+                });
                 // localStorage.setItem("userLoggedIn", "true");
                 
 
@@ -118,6 +150,9 @@
             } else{ //If user is not signed in
                 signOutButton.style.display = "none";
                 message.style.display = "none";
+                enterSkills.style.display = "none";
+                saveSkillsButton.style.display = "none";
+                skillsHeader.style.display = "none";
 
                 // localStorage.removeItem("userLoggedIn");
             }
