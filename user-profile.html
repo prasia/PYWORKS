@@ -21,8 +21,12 @@
 
     <div class="profile-container">
         <img src="./images/silverage.png" alt="User Profile Picture" class = "pfp-image">
-        <h3 class="display-name">Loading...</h3>
-        <h5 class="display-email">Loading...</h3>
+        <h2 class="display-name">Loading...</h2>
+        <h5 class="display-email">Loading...</h5>
+        <br>
+        <h4 class = "display-skills">Loading... </h4>
+        
+        
     </div>
 
     <script type="module">
@@ -57,6 +61,7 @@
         const pfpImg = document.querySelector('.pfp-image');
         const displayName = document.querySelector('.display-name');
         const emailShow = document.querySelector('.display-email');
+        const skillsShow = document.querySelector('.display-skills');
         const loginButton = document.querySelector('.login');
 
         // const urlParams = new URLSearchParams(window.location.search);
@@ -80,8 +85,9 @@
                         .then((snapshot)=>{
                         if(snapshot.exists()){
                             displayName.innerHTML = snapshot.val().displayName;
-                            pfpImg.src = snapshot.val().photoURL;
+                            pfpImg.src = snapshot.val().img;
                             emailShow.innerHTML = snapshot.val().email;
+                            skillsShow.innerHTML = snapshot.val().skills;
                         } else {
                             alert("No data found");
                         }

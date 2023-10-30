@@ -26,7 +26,7 @@
     <button id="signOutButton">Sign Out</button>
 
     <br><br>
-        <h4 id = "skillsHeader" style="display: none;">Your Skills</h4>
+        <h2 id = "skillsHeader" style="display: none;">Your Skills</h2>
         <input id="enterSkills" type="text" style="display: none;">
         <button id="saveSkills" style="display: none;">Save Skills</button>
 
@@ -109,6 +109,10 @@
         const userSignOut = async() => {
             signOut(auth).then(() => {
                 alert("You have signed out successfully!")
+
+                loginButton.innerHTML = "Login";
+                loginButton.href = './login.html';
+
             }).catch((error) => {})
         }
 
