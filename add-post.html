@@ -97,6 +97,8 @@
    
 
         import {getDatabase, ref, get, set, child, update, remove} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+
+        
         //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
         // (the one where you imported "initializeApp" from),
         //but change "firebase-app" to "firebase-database"
@@ -117,6 +119,62 @@
       
 
         var createBtn = document.querySelector("#createPost");
+
+
+        import {onAuthStateChanged, getAuth} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+            //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
+            // (the one where you imported "initializeApp" from),
+            //but change "firebase-app" to "firebase-database"
+
+        // Use the window.location or another method to extract the post ID from the URL
+
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const postId = urlParams.get('id');
+        // console.log(postId)
+        // const auth = getAuth();
+
+        // const currentUrl = window.location.href;
+        // // const postId = currentUrl.get('id');
+        // console.log(currentUrl);
+        // console.log(postId);
+
+        // Reference to your Firebase database
+
+        const loginButton = document.querySelector('.login');
+        const auth = getAuth();
+
+
+        onAuthStateChanged(auth, (user) => {
+            if (user){ //Only if the user is signed in 
+                loginButton.innerHTML = "View Profile";
+                loginButton.href = './user-profile.html?id='+ user.uid;
+                
+                // Check the user's category value
+                const userRef = ref(db, "users/" + user.uid);
+                get(userRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        const userCategory = userData.category;
+
+                        if (userCategory === 1) { // User has category 1 (Admin)
+                            loginButton.innerHTML = "View Profile";
+                            loginButton.href = './user-profile.html?id=' + user.uid;
+
+                        } else {
+                            // User does not have category 1, prevent post creation
+                            createBtn.disabled = true;
+                            createBtn.style.backgroundColor = "#ccc"; // Change button style
+                            alert("Only pre-approved users can create posts.");
+                        }
+                    }
+                }).catch((error) => {
+                    alert("Error checking user category: " + error);
+                });
+
+            } else{ //If user is not signed in
+
+            }
+        })
 
         function GenerateID(){
             // generating id
@@ -171,9 +229,11 @@
         function InsertData() {
             //Get some extra steps
             var idCode = GenerateID()
-            console.log(idCode)
+            //console.log(idCode)
             var categoryValue = getSelectedRadioOption();
-            console.log(categoryValue);
+            //console.log(categoryValue);
+
+            const user = getAuth().currentUser;
 
             set(ref(db, "posts/" + idCode),{
                 Identifier: idCode,
@@ -187,7 +247,7 @@
                 Spots: enterSpots.value,
                 ApplyURL: enterAppURL.value,
                 Category: categoryValue,
-                Applicants: [],
+                Poster: user.uid,
             })
             .then(()=>{
                 alert("Data added successfully");

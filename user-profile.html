@@ -75,10 +75,8 @@
                 console.log(userId);
 
                 const db = getDatabase();
-                const dbUsers = ref(db, "users/" + userId);
 
                 const dbref = ref(db);
-
 
                 if (userId){
                         get(child(dbref, "users/" + userId))

@@ -79,7 +79,7 @@
     </section>
 
     <div class="apply-button-container">
-        <a id="applyButton" href="#" target="_blank">Apply Now!</a>
+        <a id="applyButton" href="#" target="_self">Apply Now!</a>
     </div>
     
     <!-- Share -->
@@ -180,7 +180,7 @@
                 postLocationElement.innerHTML += postData.Location;
                 postDateElement.innerHTML += postData.Date;
                 postSpotsElement.innerHTML += postData.Spots;
-                postApplyButton.href = postData.ApplyURL;
+                // postApplyButton.href = postData.ApplyURL;
             } else {
                 console.log('Post not found or error loading data.');
             }
@@ -196,7 +196,8 @@
                 // window.location.replace(url);
 
                 // Save the "Skills" value under the user's node
-
+                postApplyButton.onclick = function() {
+                   
                 if (!dbPosts.Applicants || !Array.isArray(dbPosts.Applicants)) {
                     dbPosts.Applicants = [userUid]; // Initialize the 'Applicants' array
                 } else {
@@ -207,14 +208,13 @@
                     Applicants: dbPosts.Applicants
                 };
 
-            // Use the 'update' method to update the 'Applicants' array in the database
-            update(dbPosts, updatedData);
+                update(dbPosts, updatedData);
+                alert("Application sent succesfully!");
+            };
 
             } else{ //If user is not signed in
                 postApplyButton.onclick = function() {
                     alert("You must be signed in to apply for this job!");
-                    postApplyButton.href = "#"
-                    postApplyButton.target = "_self"
                 };
 
             }
