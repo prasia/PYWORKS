@@ -85,23 +85,29 @@
 
                 // Show a field, get those values submitted too?
                 const userRef = ref(db, "users/" + user.uid); // Assuming you want to use the user's UID as a key
-
-                set(userRef, {
-                    displayName: user.displayName,
-                    email: user.email,
-                    img: user.photoURL,
-                    id: user.uid,
-                    approvedHrs: 0,
-                    pendingHrs: 0,
-                    numApps: 0,
-                    category: 0,
-                    skills: "",
-                    // skills: "", // Field
-            })
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            })
+                get(userRef).then((snapshot) => {
+                    if (!snapshot.exists()) {
+                        // If the user data doesn't exist, set it
+                        set(userRef, {
+                            displayName: user.displayName,
+                            email: user.email,
+                            img: user.photoURL,
+                            id: user.uid,
+                            approvedHrs: 0,
+                            pendingHrs: 0,
+                            numApps: 0,
+                            category: 0,
+                            skills: "",
+                        });
+                }   
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                });
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                })
 
             // set()
         }
@@ -129,15 +135,16 @@
                 saveSkillsButton.addEventListener("click", () => {
                     const user = auth.currentUser;
                     if (user) {
-                        const uid = user.uid;
 
                         // Save the "Skills" value under the user's node
-                        update(ref(db, "users/" + uid), {
-                            skills: enterSkills.value,
-                        });
-                        alert("Skills saved successfully!");
+                        saveSkillsButton.onclick = function() {
+                            update(ref(db, "users/" + user.uid), {
+                                skills: enterSkills.value,
+                            });
+                            alert("Skills saved successfully!");
 
-                        enterSkills.value = "";
+                            //enterSkills.value = "";
+                        };
                     }
                 });
                 // localStorage.setItem("userLoggedIn", "true");

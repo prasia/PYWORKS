@@ -165,6 +165,7 @@
 
 
         // Fetch and display the post data
+
         onValue(dbPosts, (snapshot) => {
             const postData = snapshot.val();
             if (postData) {
@@ -186,12 +187,28 @@
         });
         onAuthStateChanged(auth, (user) => {
             if (user){ //Only if the user is signed in 
+                const userUid = user.uid;
                 loginButton.innerHTML = "View Profile";
                 loginButton.href = loginButton.href = './user-profile.html?id='+ user.uid;
                 // var url = window.location.href;
                 // console.log(url)
                 // // url = "/login.html?loggedIn=true";
                 // window.location.replace(url);
+
+                // Save the "Skills" value under the user's node
+
+                if (!dbPosts.Applicants || !Array.isArray(dbPosts.Applicants)) {
+                    dbPosts.Applicants = [userUid]; // Initialize the 'Applicants' array
+                } else {
+                    dbPosts.Applicants.push(userUid); // Add the user ID
+                }
+
+                const updatedData = {
+                    Applicants: dbPosts.Applicants
+                };
+
+            // Use the 'update' method to update the 'Applicants' array in the database
+            update(dbPosts, updatedData);
 
             } else{ //If user is not signed in
                 postApplyButton.onclick = function() {
