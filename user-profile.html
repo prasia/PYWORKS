@@ -28,11 +28,14 @@
         
         
     </div>
+    <br>
+
+    <div class="posts-container" id="post-holder"></div>
 
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+        import { getDatabase, ref, get, child, onValue } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
         import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
         // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
         // TODO: Add SDKs for Firebase products that you want to use
@@ -63,10 +66,80 @@
         const emailShow = document.querySelector('.display-email');
         const skillsShow = document.querySelector('.display-skills');
         const loginButton = document.querySelector('.login');
+        const postsContainer = document.getElementById('post-holder');
 
         // const urlParams = new URLSearchParams(window.location.search);
         // const userId = urlParams.get('id'); // Get the "id" parameter from the URL
         // console.log(userId);
+
+        const db = getDatabase();
+
+        const dbref = ref(db);
+
+        const dbPosts = ref(db, "posts/");
+
+
+        // onValue(dbPosts, function (snapshot) {
+        //         const postsObject = snapshot.val();
+        //         if (postsObject) {
+        //             for (const postId in postsObject) {
+        //                 const currentPost = postsObject[postId];
+        //                 // Create a post box and append it to the container
+        //                 const postBox = createPostBox(currentPost);
+        //                 postsContainer.appendChild(postBox);
+        //             }
+        //         } else {
+        //             console.log('No posts available.');
+        //         }
+        //     });
+            function chooseCategory(catNum){ //sort postings by category
+                if (catNum == 1){
+                    return "remote";
+                }
+                else if (catNum == 2){
+                    return "virtual-live";
+                }
+                else{
+                    return "in-person";
+                }
+            }
+
+            function createPostBox(post) {
+                const postBox = document.createElement('div');
+                postBox.classList.add('post-box');
+                postBox.classList.add(chooseCategory(post.Category).toLowerCase());
+
+                const img = document.createElement('img');
+                img.classList.add('post-img');
+                img.src = post.Img;
+
+                const category = document.createElement('h2');
+                category.classList.add('category');
+                category.textContent = chooseCategory(post.Category);
+
+                const title = document.createElement('a');
+                title.classList.add('post-title');
+                title.textContent = post.Title;
+                title.href = "post-page.html?id=" + post.Identifier;
+
+                const date = document.createElement('span');
+                date.classList.add('post-date');
+                date.textContent = post.Date;
+
+                const description = document.createElement('p');
+                description.classList.add('post-description');
+                description.textContent = post.Description;
+
+                // Append all elements to the postBox
+                postBox.appendChild(img);
+                postBox.appendChild(category);
+                postBox.appendChild(title);
+                postBox.appendChild(date);
+                postBox.appendChild(description);
+
+                return postBox;
+        }
+
 
         onAuthStateChanged(auth, (user) => {
             if (user){ //Only if the user is signed in 
@@ -74,25 +147,79 @@
                 const userId = urlParams.get('id');
                 console.log(userId);
 
-                const db = getDatabase();
-
-                const dbref = ref(db);
-
                 if (userId){
                         get(child(dbref, "users/" + userId))
                         .then((snapshot)=>{
-                        if(snapshot.exists()){
-                            displayName.innerHTML = snapshot.val().displayName;
-                            pfpImg.src = snapshot.val().img;
-                            emailShow.innerHTML = snapshot.val().email;
-                            skillsShow.innerHTML = snapshot.val().skills;
-                        } else {
-                            alert("No data found");
-                        }
+                            const userData = snapshot.val();
+                            const userCategory = userData.category;
+
+                            displayName.innerHTML = userData.displayName;
+                            pfpImg.src = userData.img;
+                            emailShow.innerHTML = userData.email;
+                            skillsShow.innerHTML = userData.skills;
+
+                            //console.log(userCategory);
+                            
+
+                            if (userCategory == 1) { // User has category 1 (Admin)
+                                // Allow viewing posts and get the posts created by the user
+                                // Modify the following code to retrieve and display the posts
+                                // onValue(dbPosts, (snapshot) => {
+                                //     const postsObject = snapshot.val();
+                                //     if (postsObject) {
+                                //         // Iterate through posts and create post boxes
+                                //         for (const postId in postsObject) {
+                                //             const currentPost = postsObject[postId];
+                                //             const postBox = createPostBox(currentPost);
+                                //             postsContainer.appendChild(postBox);
+                                //         }
+                                //     } else {
+                                //         console.log('No posts available.');
+                                //     }
+                                // });
+
+                                onValue(dbPosts, (snapshot) => {
+                                    const postsObject = snapshot.val();
+                                    if (postsObject) {
+                                        for (const postId in postsObject) {
+                                        const currentPost = postsObject[postId];
+
+                                        // Check if the PosterID of the post matches the UserID
+                                        if (currentPost.Poster === userId) {
+                                            // Create a post box and append it to the container
+                                            const postBox = createPostBox(currentPost);
+                                            postsContainer.appendChild(postBox);
+                                        }
+                                        }
+                                    } else {
+                                        console.log('No posts available.');
+                                    }
+                                    });
+
+
+                                // .try {
+                                //     alert("added successully!")
+                                // } catch (error) {
+                                //     alert(error)
+                                // }
+                                // .catch((error) => {
+                                //     console.error("Error fetching posts: ", error);
+                                // });
+                            }
+
+                        // if(snapshot.exists()){
+                        //     displayName.innerHTML = snapshot.val().displayName;
+                        //     pfpImg.src = snapshot.val().img;
+                        //     emailShow.innerHTML = snapshot.val().email;
+                        //     skillsShow.innerHTML = snapshot.val().skills;
+                        // } else {
+                        //     alert("No data found");
+                        // }
                     })
                     .catch((error)=>{
                         alert(error)
                     })
+
                 
                     
                     // onValue(dbUsers, (snapshot) => {

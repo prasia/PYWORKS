@@ -25,31 +25,31 @@
         <br>
 
         <h4>Title</h4> 
-        <input id="enterTitle" type="text"> 
+        <input id="enterTitle" type="text" required> 
 
         <h4>Image (Google URL)</h4> 
-        <input id="enterImgURL" type="text"> 
+        <input id="enterImgURL" type="text" required> 
 
         <h4>Description</h4> 
-        <input id="enterDesc" type="text"> 
+        <input id="enterDesc" type="text" required> 
 
         <h4>Email</h4> 
-        <input id="enterContact" type="text"> 
+        <input id="enterContact" type="text" required> 
 
         <h4>Date (Range)</h4> 
-        <input id="enterDate" type="text"> <br><br>
+        <input id="enterDate" type="text" required> <br><br>
 
-        <h4>Application URL</h4> 
-        <input id="enterAppURL" type="text"> <br><br>
+        <!-- <h4>Application URL</h4> 
+        <input id="enterAppURL" type="text"> <br><br> -->
 
         <h4>Hours</h4> 
-        <input id="enterHours" type="number"> <br><br>
+        <input id="enterHours" type="number" required> <br><br>
 
         <h4>Location</h4> 
-        <input id="enterLocation" type="text"> <br><br>
+        <input id="enterLocation" type="text" required> <br><br>
 
         <h4>Spots</h4> 
-        <input id="enterSpots" type="number"> <br><br>
+        <input id="enterSpots" type="number" required> <br><br>
 
         <h4>Category</h4> 
         <input type="radio" id="remote" name="jobCategory" value="Remote">
@@ -110,7 +110,7 @@
         const enterDesc = document.querySelector("#enterDesc");
         const enterHours = document.querySelector("#enterHours");
         const enterContact = document.querySelector("#enterContact");
-        const enterAppURL = document.querySelector('#enterAppURL');
+        // const enterAppURL = document.querySelector('#enterAppURL');
         const enterDate = document.querySelector('#enterDate');
         const enterLocation = document.querySelector('#enterLocation');
         const enterImgURL = document.querySelector('#enterImgURL');
@@ -245,7 +245,6 @@
                 Date: enterDate.value,
                 Location: enterLocation.value,
                 Spots: enterSpots.value,
-                ApplyURL: enterAppURL.value,
                 Category: categoryValue,
                 Poster: user.uid,
             })
