@@ -32,6 +32,10 @@
 
     <div class="posts-container" id="post-holder"></div>
 
+    <div class="add-post-link-container">
+        <a href="./add-post.html" id="addPostLink" display="none">Add Posts!</a>
+    </div>
+
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
@@ -67,6 +71,7 @@
         const skillsShow = document.querySelector('.display-skills');
         const loginButton = document.querySelector('.login');
         const postsContainer = document.getElementById('post-holder');
+        const addPostLink = document.getElementById('addPostLink');
 
         // const urlParams = new URLSearchParams(window.location.search);
         // const userId = urlParams.get('id'); // Get the "id" parameter from the URL
@@ -177,6 +182,8 @@
                                 //         console.log('No posts available.');
                                 //     }
                                 // });
+
+                                addPostLink.style.display = "block";
 
                                 onValue(dbPosts, (snapshot) => {
                                     const postsObject = snapshot.val();

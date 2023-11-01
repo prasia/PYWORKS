@@ -293,6 +293,7 @@ header.shadow .logo{
     text-align: justify;
 }
 
+/*Buttons*/
 #applyButton, #openLinksButton {
     padding: 20px 40px; /* Adjust the padding as needed to make it bigger */
     background-color: var(--second-color); /* Set to your --second-color */
@@ -311,7 +312,7 @@ header.shadow .logo{
     background-color: #fff; /* Set your desired background color */
 }
 
-#applyButton:hover {
+#applyButton:hover, #openLinksButton:hover {
     background-color: var(--hover-color);
 }
 

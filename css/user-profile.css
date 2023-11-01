@@ -233,4 +233,27 @@ body{
     font-weight: 500;
 }
 
+/*Add Posts*/
+
+#addPostLink {
+    padding: 20px 40px; 
+    background-color: var(--second-color); 
+    color: #fff; 
+    border: none;
+    border-radius: 10px; 
+    cursor: pointer;
+    font-size: 24px; 
+    transition: background-color 0.3s;
+}
+.add-post-link-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    background-color: var(--container-color);
+}
+
+#addPostLink:hover {
+    background-color: var(--hover-color);
+}
 
