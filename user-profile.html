@@ -33,7 +33,7 @@
     <div class="posts-container" id="post-holder"></div>
 
     <div class="add-post-link-container">
-        <a href="./add-post.html" id="addPostLink" display="none">Add Posts!</a>
+        <a href="./add-post.html" id="addPostLink" style.display="none">Add Posts!</a>
     </div>
 
     <script type="module">
@@ -202,8 +202,6 @@
                                         console.log('No posts available.');
                                     }
                                     });
-
-
                                 // .try {
                                 //     alert("added successully!")
                                 // } catch (error) {
@@ -213,6 +211,9 @@
                                 //     console.error("Error fetching posts: ", error);
                                 // });
                             }
+                            else{
+                                    addPostLink.style.display = "none"
+                                }
 
                         // if(snapshot.exists()){
                         //     displayName.innerHTML = snapshot.val().displayName;
