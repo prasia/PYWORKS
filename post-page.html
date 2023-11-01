@@ -81,6 +81,12 @@
     <div class="apply-button-container">
         <a id="applyButton" href="#" target="_self">Apply Now!</a>
     </div>
+
+    <div class="open-links-container">
+    <a id="openLinksButton" href="#">View Other Applicants!</a>
+    </div>
+
+    </div>
     
     <!-- Share -->
     <!-- <div class="share post-container">
@@ -160,12 +166,22 @@
         const postDateElement = document.querySelector('.post-dates');
         const postSpotsElement = document.querySelector('.post-spots');
         const postApplyButton = document.querySelector('#applyButton');
+        const applicantsContainer = document.querySelector('.applicant-container');
 
         const loginButton = document.querySelector('.login');
 
-
-        // Fetch and display the post data
-
+        //Make a list of all the applicant profiles
+        function getApplicantProfiles(applicantList){
+            const prefix = "user-profile.html?id=";
+            const profiles = [];
+            for (var i = 0; i < applicantList.length; i++){
+                // console.log(applicantList[i]);
+                profiles.push(prefix + applicantList[i]);
+            }
+            return profiles;
+        }
+        
+         // Fetch and display the post data
         onValue(dbPosts, (snapshot) => {
             const postData = snapshot.val();
             if (postData) {
@@ -180,6 +196,17 @@
                 postLocationElement.innerHTML += postData.Location;
                 postDateElement.innerHTML += postData.Date;
                 postSpotsElement.innerHTML += postData.Spots;
+                var applicants = getApplicantProfiles(postData.Applicants);
+
+                document.getElementById("openLinksButton").addEventListener("click", function () {
+                // Define an array of URLs you want to open
+
+                // Open each link in a new tab or window
+                applicants.forEach(function (url) {
+                    window.open(url, "_blank");
+                });
+            });
+
                 // postApplyButton.href = postData.ApplyURL;
             } else {
                 console.log('Post not found or error loading data.');

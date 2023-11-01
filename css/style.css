@@ -293,7 +293,7 @@ header.shadow .logo{
     text-align: justify;
 }
 
-#applyButton {
+#applyButton, #openLinksButton {
     padding: 20px 40px; /* Adjust the padding as needed to make it bigger */
     background-color: var(--second-color); /* Set to your --second-color */
     color: #fff; /* Set text color to contrast with the background color */
@@ -303,7 +303,7 @@ header.shadow .logo{
     font-size: 24px; /* Adjust the font size as needed */
     transition: background-color 0.3s;
 }
-.apply-button-container {
+.apply-button-container, .open-links-container {
     display: flex;
     justify-content: center;
     align-items: center;
