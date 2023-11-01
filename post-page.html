@@ -167,8 +167,11 @@
         const postSpotsElement = document.querySelector('.post-spots');
         const postApplyButton = document.querySelector('#applyButton');
         const applicantsContainer = document.querySelector('.applicant-container');
+        const postApplicantLink = document.getElementById("openLinksButton");
 
         const loginButton = document.querySelector('.login');
+        var currentUserUid = null;
+        var posterID = null;
 
         //Make a list of all the applicant profiles
         function getApplicantProfiles(applicantList){
@@ -188,7 +191,7 @@
                 postTitleElement.innerHTML = postData.Title;
                 postDescriptionElement.textContent = postData.Description;
                 // postDescriptionElement.innerHTML = postData.Description;
-                // // postDateElement.innerHTML = postData.Date;
+                // postDateElement.innerHTML = postData.Date;
                 // postContactElement.innerHTML = postData.Contact;
                 postImageElement.src = postData.Img; // Set the image source
                 postContactElement.innerHTML += postData.Contact;
@@ -196,25 +199,19 @@
                 postLocationElement.innerHTML += postData.Location;
                 postDateElement.innerHTML += postData.Date;
                 postSpotsElement.innerHTML += postData.Spots;
+                posterID = postData.Poster;
                 var applicants = getApplicantProfiles(postData.Applicants);
 
-                document.getElementById("openLinksButton").addEventListener("click", function () {
-                // Define an array of URLs you want to open
+                postApplicantLink.addEventListener("click", function () {
 
-                // Open each link in a new tab or window
+                // Open each profile in a new tab or window
                 applicants.forEach(function (url) {
                     window.open(url, "_blank");
                 });
-            });
-
-                // postApplyButton.href = postData.ApplyURL;
-            } else {
-                console.log('Post not found or error loading data.');
-            }
-        });
-        onAuthStateChanged(auth, (user) => {
-            if (user){ //Only if the user is signed in 
-                const userUid = user.uid;
+                });
+            onAuthStateChanged(auth, (user) => {
+            if (user){ //Only if the user is signed in
+                var userUid = user.uid;
                 loginButton.innerHTML = "View Profile";
                 loginButton.href = loginButton.href = './user-profile.html?id='+ user.uid;
                 // var url = window.location.href;
@@ -222,30 +219,103 @@
                 // // url = "/login.html?loggedIn=true";
                 // window.location.replace(url);
 
-                // Save the "Skills" value under the user's node
+                // Save applicants to the post
                 postApplyButton.onclick = function() {
-                   
-                if (!dbPosts.Applicants || !Array.isArray(dbPosts.Applicants)) {
-                    dbPosts.Applicants = [userUid]; // Initialize the 'Applicants' array
-                } else {
-                    dbPosts.Applicants.push(userUid); // Add the user ID
+                    if (!postData.Applicants || !Array.isArray(postData.Applicants)) {
+                        postData.Applicants = [userUid];
+                        console.log(postData.Applicants)
+                    } else {
+                        postData.Applicants.push(userUid);
+                    }
+
+                    const updatedData = {
+                        Applicants: postData.Applicants
+                    };
+
+                    update(dbPosts, updatedData)
+                        .then(() => {
+                            alert("Application sent successfully!");
+                        })
+                        .catch((error) => {
+                            console.error("Error updating the database:", error);
+                        });
+        }
+
+                console.log(userUid);
+                console.log(postData.Poster);
+                if (userUid === postData.Poster) {
+                // Enable the "View Applicants" button
+                    postApplicantLink.style.display = "block";
+                }
+                else{
+                    postApplicantLink.style.display = "none";
                 }
 
-                const updatedData = {
-                    Applicants: dbPosts.Applicants
-                };
-
-                update(dbPosts, updatedData);
-                alert("Application sent succesfully!");
-            };
-
-            } else{ //If user is not signed in
+            } else{
+                currentUserUid = null;
                 postApplyButton.onclick = function() {
                     alert("You must be signed in to apply for this job!");
                 };
-
+                postApplicantLink.style.display = "none";
             }
         })
+
+                // postApplyButton.href = postData.ApplyURL;
+            } else {
+                console.log('Post not found or error loading data.');
+            }
+        });
+        // onAuthStateChanged(auth, (user) => {
+        //     if (user){ //Only if the user is signed in
+        //         var userUid = user.uid;
+        //         loginButton.innerHTML = "View Profile";
+        //         loginButton.href = loginButton.href = './user-profile.html?id='+ user.uid;
+        //         // var url = window.location.href;
+        //         // console.log(url)
+        //         // // url = "/login.html?loggedIn=true";
+        //         // window.location.replace(url);
+
+        //         // Save applicants to the post
+        //         console.log(postData.Applicants)
+        //         postApplyButton.onclick = function() {
+                    
+        //             if (!dbPosts.Applicants || !Array.isArray(dbPosts.Applicants)) {
+        //                 dbPosts.Applicants = [userUid]; 
+        //             } else {
+        //                 dbPosts.Applicants.push(userUid);
+        //             }
+
+        //             const updatedData = {
+        //                 Applicants: dbPosts.Applicants
+        //             };
+
+                    
+        //             update(dbPosts, updatedData)
+        //                 .then(() => {
+        //                     alert("Application sent successfully!");
+        //                 })
+        //                 .catch((error) => {
+        //                     console.error("Error updating the database:", error);
+        //                 });
+        //         }
+
+        //     // console.log(userUid);
+        //     // console.log(posterId);
+        //     //     if (userUid === posterID) {
+        //     //     // Enable the "View Applicants" button
+        //     //         postApplicantLink.style.display = "block";
+        //     //     }
+        //     //     else{
+        //     //         postApplicantLink.style.display = "none";
+        //     // }
+
+        //     } else{
+        //         currentUserUid = null;
+        //         postApplyButton.onclick = function() {
+        //             alert("You must be signed in to apply for this job!");
+        //         };
+        //     }
+        // })
     </script>
 
     <!-- <script src="login.js"></script> -->

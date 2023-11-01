@@ -128,23 +128,32 @@
                 message.style.display = "block";
                 userName.innerHTML = user.displayName;
                 userEmail.innerHTML = user.email;
-                enterSkills.style.display = "block";
-                saveSkillsButton.style.display = "block";
-                skillsHeader.style.display = "block";
 
-                saveSkillsButton.addEventListener("click", () => {
-                    const user = auth.currentUser;
-                    if (user) {
+                const userRef = ref(db, "users/" + user.uid);
+                get(userRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        if (userData.category == 0){
+                        enterSkills.style.display = "block";
+                        saveSkillsButton.style.display = "block";
+                        skillsHeader.style.display = "block";
 
-                        // Save the "Skills" value under the user's node
-                        saveSkillsButton.onclick = function() {
-                            update(ref(db, "users/" + user.uid), {
-                                skills: enterSkills.value,
-                            });
-                            alert("Skills saved successfully!");
+                        saveSkillsButton.addEventListener("click", () => {
+                            const user = auth.currentUser;
+                            if (user) {
 
-                            //enterSkills.value = "";
-                        };
+                                // Save the "Skills" value under the user's node
+                                saveSkillsButton.onclick = function() {
+                                    update(ref(db, "users/" + user.uid), {
+                                        skills: enterSkills.value,
+                                    });
+                                    alert("Skills saved successfully!");
+
+                                    //enterSkills.value = "";
+                                };
+                            }
+                        });
+                    }
                     }
                 });
                 // localStorage.setItem("userLoggedIn", "true");
